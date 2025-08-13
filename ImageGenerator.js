@@ -13,7 +13,7 @@ class ImageGenerator {
         const ctx = canvas.getContext("2d");
 
         const backgroundImage = await loadImage(
-            await this.downloadImage("https://i.imgur.com/Cf4Ysrv.jpeg")
+            path.join(__dirname, "assets", "BACKGROUND.jpeg")
         );
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -330,7 +330,7 @@ class ImageGenerator {
         const ctx = canvas.getContext("2d");
 
         const backgroundImage = await loadImage(
-            await this.downloadImage("https://i.imgur.com/Cf4Ysrv.jpg")
+            path.join(__dirname, "assets", "BACKGROUND.jpeg")
         );
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -384,14 +384,15 @@ class ImageGenerator {
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 console.error(`Image not found for URL: ${url}`);
-                const placeholderUrl = "https://i.imgur.com/LT0WPSw.jpeg";
-                console.error(
-                    `Using placeholder image instead: ${placeholderUrl}`
+                const placeholderPath = path.join(
+                    __dirname,
+                    "PLACEHOLDER.jpeg"
                 );
-                const placeholderResponse = await axios.get(placeholderUrl, {
-                    responseType: "arraybuffer",
-                });
-                return placeholderResponse.data;
+                console.error(
+                    `Using placeholder image instead: ${placeholderPath}`
+                );
+                const placeholderImage = fs.readFileSync(placeholderPath);
+                return placeholderImage;
             } else {
                 throw error;
             }
