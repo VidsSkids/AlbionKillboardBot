@@ -99,7 +99,7 @@ class ImageGenerator {
             kill.GroupMembers.length != kill.Participants.length
         ) {
             const groupIcon = await loadImage(
-                await this.downloadImage("https://i.imgur.com/josec2F.png")
+                path.join(__dirname, "assets", "GROUP_ICON.png")
             );
             const groupIconSize = 50;
             const groupY = fameY + 110;
